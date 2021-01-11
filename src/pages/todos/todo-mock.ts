@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { Todo } from "@prisma/client";
 
-export const todos: ITodo[] = [
+export const todos: Todo[] = [
   {
     id: 1,
     title: "testTodo1",
