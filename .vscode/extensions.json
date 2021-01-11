@@ -3,6 +3,7 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "firsttris.vscode-jest-runner",
-    "prisma.prisma"
+    "prisma.prisma",
+    "davidanson.vscode-markdownlint"
   ]
 }
