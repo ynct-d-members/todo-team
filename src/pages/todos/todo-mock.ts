@@ -5,7 +5,7 @@ export const todos: Todo[] = [
   {
     id: 1,
     title: "testTodo1",
-    createdAt: dayjs().format("YYYY/MM/DD HH:mm:ss"),
-    updatedAt: dayjs().format("YYYY/MM/DD HH:mm:ss"),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 ];
