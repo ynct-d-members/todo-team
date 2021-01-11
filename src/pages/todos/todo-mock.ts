@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { ITodo } from "./todo";
+import { Todo } from "@prisma/client";
 
 export const todos: ITodo[] = [
   {
