@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { Todo } from "@prisma/client";
 
 export const todos: Todo[] = [
