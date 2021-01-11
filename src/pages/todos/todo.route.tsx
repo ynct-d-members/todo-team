@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import TodoDetailContainer from "./todo-detail/containers/todo-detail.container";
+import { TodoDetailContainer } from "./todo-detail";
 
-const Routes: React.FC = () => {
+export const Routes: React.FC = () => {
   return (
     <>
       <Router>
@@ -13,5 +13,3 @@ const Routes: React.FC = () => {
     </>
   );
 };
-
-export default Routes;
