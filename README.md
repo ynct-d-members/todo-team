@@ -1,46 +1,104 @@
-# Getting Started with Create React App
+# TODO-TEAM
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 開発セットアップ
 
-## Available Scripts
+### 1. asdf(必須)
 
-In the project directory, you can run:
+- [asdf](https://github.com/asdf-vm/asdf) + [asdf-nodejs](https://github.com/asdf-vm/asdf-nodejs) を使用してインストール<details><summary>インストール方法詳細</summary><pre>
+  \$ git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.8
+  </pre><pre>
+  // bash
+  $ echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bash_profile
+  $ echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.bash_profile
+  $ source ~/.bash_profile
+  <br />// zsh
+  % echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.zprofile
+  % source ~/.zprofile
+  </pre><pre>
+  $ brew install coreutils
+  $ brew install gpg
+  </pre><pre>
+  $ asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+  $ bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+  </pre><pre>
+  // example
+  $ asdf install nodejs 14.15.4
+  $ asdf global nodejs 14.15.4
+  $ asdf reshim nodejs
+  </pre>
+  </details>
 
-### `npm run start`
+- [公式サイト](https://nodejs.org/) からダウンロードしてインストール
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 2. mysql(必須)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- インストール
 
-### `npm run test`
+```shell
+brew install mysql@5.7
+echo 'export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 起動
 
-### `npm run build`
+```shell
+brew services start mysql@5.7 # mysql起動
+mysql_secure_installation # user, passの設定
+mysql --user=root --password # ログイン
+brew services stop mysql@5.7 # mysql停止
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 初回起動時のみ
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```sql
+SHOW databases; # 一覧の確認
+CREATE DATABASE mydb; # db作成
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 3. 依存ライブラリのインストール(必須)
 
-### `npm run eject`
+```shell
+npm ci
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 4. prisma ライブラリの作成(必須)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```shell
+npx prisma generate
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### ex. prisma studio
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Prisma Studio の GUI アプリ。
+`schema.prisma` を select すれば定義された DB にアクセスが可能で、Prisma 経由で更新作業などを行うことができる。
 
-## Learn More
+[Prisma Studio App](https://github.com/prisma/studio/releases)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 推奨開発環境
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- VSCode
+
+共有の開発設定を共有できる `.vscode/` を定義しているため。
+formatting や拡張なども自動でインストールできるため推奨。
+vimmer の方は[Vim の拡張](https://marketplace.visualstudio.com/items?itemName=vscodevim.vi)があります。
+
+## 開発
+
+### 開発サーバを起動
+
+```shell
+npm run start
+```
+
+### テスト
+
+```shell
+npm run test
+```
+
+### マイグレーション
+
+```shell
+npm run migrate
+```
