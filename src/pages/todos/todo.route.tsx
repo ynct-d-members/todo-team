@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import TodoDetailContainer from "./todo-detail/containers/TodoDetail";
+import TodoDetailContainer from "./todo-detail/containers/TodoDetailContainer";
 
 const Routes: React.FC = () => {
   return (
