@@ -6,7 +6,7 @@ type TodoDetailProps = {
   id: number;
 };
 
-const TodoDetail: React.FC<TodoDetailProps> = (props) => {
+export const TodoDetail: React.FC<TodoDetailProps> = (props) => {
   const todo = todos.find((t) => t.id === props.id);
   return todo ? (
     <>
@@ -35,5 +35,3 @@ const TodoDetail: React.FC<TodoDetailProps> = (props) => {
     <div>todo not found</div>
   );
 };
-
-export default TodoDetail;
