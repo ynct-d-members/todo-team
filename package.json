@@ -2,7 +2,6 @@
   "name": "todo-team",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "dependencies": {
     "@prisma/client": "^2.14.0",
     "dayjs": "^1.10.3",
