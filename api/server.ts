@@ -1,17 +1,13 @@
-import Fastify, { FastifyInstance, RouteShorthandOptions } from "fastify";
+import Fastify, { FastifyInstance } from "fastify";
 import { Server, IncomingMessage, ServerResponse } from "http";
 import { todos } from "../src/pages/todos/todo-mock";
 import { Todo } from "@prisma/client";
 
-const server = Fastify();
+const server: FastifyInstance = Fastify();
 
 //handles GET / request
 server.get("/", async (request, reply) => {
-  try {
-    return { message: "hello, world!" };
-  } catch (e) {
-    console.log(e);
-  }
+  return { message: "hello, world!" };
 });
 
 interface ITodoParameters {
