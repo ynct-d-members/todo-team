@@ -1,6 +1,6 @@
 import React from "react";
 import { todos } from "../../todo-mock";
-import dayjs from "dayjs";
+import { parseFormat } from "../../../../libs";
 
 type TodoDetailProps = {
   id: number;
@@ -22,11 +22,11 @@ export const TodoDetail: React.FC<TodoDetailProps> = (props) => {
           </tr>
           <tr>
             <td>作成日</td>
-            <td>{dayjs(todo.createdAt).format("YYYY/MM/DD HH:mm:ss")}</td>
+            <td>{parseFormat(todo.createdAt, "YYYY/MM/DD HH:mm:ss")}</td>
           </tr>
           <tr>
             <td>更新日</td>
-            <td>{dayjs(todo.createdAt).format("YYYY/MM/DD HH:mm:ss")}</td>
+            <td>{parseFormat(todo.updatedAt, "YYYY/MM/DD HH:mm:ss")}</td>
           </tr>
         </tbody>
       </table>
