@@ -1,24 +1,26 @@
-const fastify = require('fastify');
+import Fastify, { FastifyInstance, RouteShorthandOptions } from "fastify";
+import { Server, IncomingMessage, ServerResponse } from "http";
 //const path = require('./routes');
 
-const server = fastify();
+const server = Fastify();
 
 //handles GET / request
-server.get('/', async (request, reply) => {
+server.get("/", async (request, reply) => {
   try {
-    return {message : "hello, world!"}
+    return { message: "hello, world!" };
+  } catch (e) {
+    console.log(e);
   }
-  catch (e) { console.log(e) }
 });
 
 //iterating over all the routes and registering them with fastify
 // routes.forEach(route => server.route(route))
 
 //launching server at port : 3000 in local environment
-server.listen(process.env.PORT || 3010, '0.0.0.0', (err) => {
+server.listen(process.env.PORT || 3010, "0.0.0.0", (err) => {
   if (err) {
     console.error(err);
     process.exit(1);
   }
-  console.log(`server running at ${server.server.address()}`)
-})
+  console.log(`server running at ${server.server.address()}`);
+});

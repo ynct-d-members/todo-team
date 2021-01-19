@@ -5,16 +5,17 @@
   "dependencies": {
     "@prisma/client": "^2.14.0",
     "dayjs": "^1.10.3",
-    "fastify": "^3.9.2",
+    "fastify": "^3.10.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "ts-node": "^9.1.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "npm-run-all -p start:*",
-    "start:server": "node api/server.ts",
+    "start:server": "ts-node api/server.ts",
     "start:react": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
