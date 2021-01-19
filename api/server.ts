@@ -1,9 +1,23 @@
-import Fastify, { FastifyInstance } from "fastify";
-import { Server, IncomingMessage, ServerResponse } from "http";
+import Fastify from "fastify";
 import { todos } from "../src/pages/todos/todo-mock";
 import { Todo } from "@prisma/client";
+import fastifyCors from "fastify-cors";
 
-const server: FastifyInstance = Fastify();
+const server = Fastify();
+
+// Cors対策
+// localhostからの通信は許可し，それ以外は遮断
+server.register(fastifyCors, {
+  origin: (origin, cb) => {
+    if (/localhost/.test(origin)) {
+      // Request from localhost will pass
+      cb(null, true);
+      return;
+    }
+    // Generate an error on other origins, disabling access
+    cb(new Error("Not allowed"), false);
+  },
+});
 
 //handles GET / request
 server.get("/", async (request, reply) => {
