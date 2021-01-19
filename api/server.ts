@@ -2,7 +2,6 @@ import Fastify, { FastifyInstance, RouteShorthandOptions } from "fastify";
 import { Server, IncomingMessage, ServerResponse } from "http";
 import { todos } from "../src/pages/todos/todo-mock";
 import { Todo } from "@prisma/client";
-//const path = require('./routes');
 
 const server = Fastify();
 
@@ -30,11 +29,6 @@ server.get<{ Params: ITodoParameters }>("/todo/:id", async (request, reply) => {
   } else {
     reply.code(200).send(todo);
   }
-  // try {
-  //   return todo;
-  // } catch (e) {
-  //   console.log(e);
-  // }
 });
 
 //iterating over all the routes and registering them with fastify
