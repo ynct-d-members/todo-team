@@ -1,6 +1,7 @@
 import Fastify, { FastifyInstance, RouteShorthandOptions } from "fastify";
 import { Server, IncomingMessage, ServerResponse } from "http";
-//const path = require('./routes');
+import { todos } from "../src/pages/todos/todo-mock";
+import { Todo } from "@prisma/client";
 
 const server = Fastify();
 
@@ -10,6 +11,23 @@ server.get("/", async (request, reply) => {
     return { message: "hello, world!" };
   } catch (e) {
     console.log(e);
+  }
+});
+
+interface ITodoParameters {
+  id: string;
+}
+
+server.get<{ Params: ITodoParameters }>("/todo/:id", async (request, reply) => {
+  const { id } = request.params;
+  const todo: Todo | undefined = todos.find(
+    (todo) => todo.id === Number.parseInt(id)
+  );
+
+  if (todo === undefined) {
+    reply.code(404).send({ message: "Specified todo is undefined" });
+  } else {
+    reply.code(200).send(todo);
   }
 });
 
