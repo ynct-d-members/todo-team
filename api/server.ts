@@ -1,5 +1,5 @@
 import Fastify from "fastify";
-import { todos } from "../src/pages/todos/todo-mock";
+import { todos } from "./mocks/todo-mock";
 import { Todo } from "@prisma/client";
 import fastifyCors from "fastify-cors";
 
