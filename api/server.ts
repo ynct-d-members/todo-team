@@ -28,6 +28,7 @@ interface ITodoParameters {
   id: string;
 }
 
+// lookup todo by id
 server.get<{ Params: ITodoParameters }>("/todo/:id", async (request, reply) => {
   const { id } = request.params;
   const todo: Todo | undefined = todos.find(
@@ -39,6 +40,11 @@ server.get<{ Params: ITodoParameters }>("/todo/:id", async (request, reply) => {
   } else {
     reply.code(200).send(todo);
   }
+});
+
+// todos list
+server.get("/todo/", async (request, reply) => {
+  reply.code(200).send(todos);
 });
 
 //iterating over all the routes and registering them with fastify
