@@ -1,6 +1,6 @@
 import React from "react";
 import { todos } from "../../todo-mock";
-import { date } from "../../../../libs";
+import { date } from "@/libs";
 
 type TodoDetailProps = {
   id: number;
