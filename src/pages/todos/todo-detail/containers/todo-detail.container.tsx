@@ -12,7 +12,7 @@ const initialState: Todo = {
   updatedAt: new Date(),
 };
 
-export const TodoDetailContainer: React.FC<{ id: number }> = (props) => {
+export const TodoDetailContainer: React.FC<{ id: string }> = (props) => {
   const [todo, setTodo] = useState(initialState);
 
   useEffect(() => {
