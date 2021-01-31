@@ -17,7 +17,7 @@ export const TodoDetailContainer: React.FC<{ id: string }> = (props) => {
 
   useEffect(() => {
     const fetch = async () => {
-      const result = await http.get<Todo>(`./todo/1`);
+      const result = await http.get<Todo>(`./todo/${props.id}`);
       setTodo(result);
     };
     fetch();
