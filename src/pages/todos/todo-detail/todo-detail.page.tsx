@@ -7,8 +7,12 @@ interface RouterParams {
   id: string;
 }
 
+const toId = (id: string): number => {
+  return Number(id);
+};
+
 export const TodoDetailPage: React.FC = () => {
   const { id } = useParams<RouterParams>();
 
-  return <TodoDetailContainer id={id} />;
+  return <TodoDetailContainer id={toId(id)} />;
 };

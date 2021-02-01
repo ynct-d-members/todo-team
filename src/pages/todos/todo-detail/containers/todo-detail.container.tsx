@@ -7,7 +7,7 @@ import { http } from "../../../../libs/http";
 import { TodoDetail } from "../components";
 import { initialState } from "../../todo.state";
 
-export const TodoDetailContainer: React.FC<{ id: string }> = (props) => {
+export const TodoDetailContainer: React.FC<{ id: number }> = (props) => {
   const [todo, setTodo] = useState(initialState);
 
   useEffect(() => {
