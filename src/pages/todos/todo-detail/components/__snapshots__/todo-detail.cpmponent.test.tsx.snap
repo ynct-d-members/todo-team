@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`todo-detail.component.tsx render 1`] = `
+<DocumentFragment>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          id
+        </td>
+        <td>
+          1
+        </td>
+      </tr>
+      <tr>
+        <td>
+          タイトル
+        </td>
+        <td>
+          test
+        </td>
+      </tr>
+      <tr>
+        <td>
+          作成日
+        </td>
+        <td />
+      </tr>
+      <tr>
+        <td>
+          更新日
+        </td>
+        <td />
+      </tr>
+    </tbody>
+  </table>
+</DocumentFragment>
+`;
