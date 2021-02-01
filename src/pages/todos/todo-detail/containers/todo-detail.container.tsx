@@ -1,11 +1,16 @@
 import React from "react";
 import { useState, useEffect } from "react";
-
 import { Todo } from "@prisma/client";
-import { http } from "../../../../libs/http";
 
+import { http } from "../../../../libs/http";
 import { TodoDetail } from "../components";
-import { initialState } from "../../todo.state";
+
+const initialState: Todo = {
+  id: 0,
+  title: "",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
 
 export const TodoDetailContainer: React.FC<{ id: string }> = (props) => {
   const [todo, setTodo] = useState(initialState);
