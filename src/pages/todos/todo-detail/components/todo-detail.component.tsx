@@ -1,37 +1,34 @@
 import React from "react";
-import { todos } from "../../todo-mock";
-import dayjs from "dayjs";
+import { date } from "../../../../libs";
+import { Todo } from "@prisma/client";
 
 type TodoDetailProps = {
-  id: number;
+  todo: Todo;
 };
 
 export const TodoDetail: React.FC<TodoDetailProps> = (props) => {
-  const todo = todos.find((t) => t.id === props.id);
-  return todo ? (
+  return (
     <>
       <table>
         <tbody>
           <tr>
             <td>id</td>
-            <td>{todo.id}</td>
+            <td>{props.todo.id}</td>
           </tr>
           <tr>
             <td>タイトル</td>
-            <td>{todo.title}</td>
+            <td>{props.todo.title}</td>
           </tr>
           <tr>
             <td>作成日</td>
-            <td>{dayjs(todo.createdAt).format("YYYY/MM/DD HH:mm:ss")}</td>
+            <td>{date.format(props.todo.createdAt, "YYYY/MM/DD HH:mm:ss")}</td>
           </tr>
           <tr>
             <td>更新日</td>
-            <td>{dayjs(todo.createdAt).format("YYYY/MM/DD HH:mm:ss")}</td>
+            <td>{date.format(props.todo.updatedAt, "YYYY/MM/DD HH:mm:ss")}</td>
           </tr>
         </tbody>
       </table>
     </>
-  ) : (
-    <div>todo not found</div>
   );
 };
