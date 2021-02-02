@@ -1,8 +1,6 @@
 import Fastify from "fastify";
-import { todos } from "../src/pages/todos/todo-mock";
-import { Todo } from "@prisma/client";
 import fastifyCors from "fastify-cors";
-import { root } from "./routes/root";
+import { Router } from "./router";
 
 const server = Fastify();
 
@@ -27,6 +25,7 @@ class REST {
     });
 
     server.get("/", this.getHelloHandler);
+    Router(server);
 
     //launching server at port : 3000 in local environment
     server.listen(process.env.PORT || 3010, "0.0.0.0", (err) => {
@@ -44,15 +43,3 @@ class REST {
   }
 }
 new REST();
-
-interface ITodoParameters {
-  id: string;
-}
-
-// todos list
-server.get("/todo/", async (request, reply) => {
-  reply.code(200).send(todos);
-});
-
-//iterating over all the routes and registering them with fastify
-// routes.forEach(route => server.route(route))
