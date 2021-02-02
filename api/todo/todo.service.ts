@@ -1,5 +1,5 @@
 import { Todo } from "@prisma/client";
-import { todos } from "../../src/pages/todos/todo-mock";
+import { todos } from "../mocks/todo-mock";
 
 export class TodoService {
   public getTodosList(): Todo[] {
