@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`todo-create.component.tsx render 1`] = `
+<DocumentFragment>
+  <form
+    style="text-align: start;"
+  >
+    <p>
+      タイトル：
+      <input
+        aria-label="title-input"
+        name="title"
+      />
+    </p>
+    <p>
+      <input
+        type="submit"
+        value="送信"
+      />
+    </p>
+  </form>
+</DocumentFragment>
+`;
