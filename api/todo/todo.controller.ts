@@ -8,6 +8,13 @@ interface ITodoDetailRequest {
   };
 }
 
+interface ICreateRequest {
+  Body: {
+    id: string;
+    title: string;
+  };
+}
+
 export class TodoController {
   // todos list
   public getTodosListHandler(request: FastifyRequest, reply: FastifyReply) {
@@ -23,7 +30,7 @@ export class TodoController {
   ) {
     const todoService = new TodoService();
 
-    reply.header("Content-Type", "application/json").code(200);
+    reply.header("Content-Type", "application/json");
     const { id } = request.params;
     const todo: Todo | undefined = todoService.getTodo(Number.parseInt(id));
     if (todo === undefined) {
@@ -31,5 +38,17 @@ export class TodoController {
     } else {
       reply.code(200).send(todo);
     }
+  }
+
+  public async createTodoHandler(
+    request: FastifyRequest<ICreateRequest>,
+    reply: FastifyReply
+  ) {
+    const todoService = new TodoService();
+
+    reply.header("Content-Type", "application/json");
+    const { title } = request.body;
+    const todo = await todoService.createTodo(title);
+    reply.code(200).send(todo);
   }
 }

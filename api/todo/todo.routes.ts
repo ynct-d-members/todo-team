@@ -6,6 +6,7 @@ export class TodoRoutes {
     const todoController = new TodoController();
     server.get("/todos", todoController.getTodosListHandler);
     server.get("/todo/:id", todoController.getTodoDetailHandler);
+    server.post("/todo/create", todoController.createTodoHandler);
 
     done();
   }
