@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { TodoRoutes } from "./modules/todo/todo.routes";
+import { TodoRoutes } from "./modules/todo";
 
 // ルーティングをまとめてくれる関数
 export function Router(server: FastifyInstance): void {
