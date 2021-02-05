@@ -14,9 +14,8 @@ export class TodoService extends BaseService {
   }
 
   public async createTodo(title: string) {
-    const prisma = this.client;
     try {
-      const newtodo = await prisma.todo.create({
+      const newtodo = await this.client.todo.create({
         data: {
           title: title,
         },
