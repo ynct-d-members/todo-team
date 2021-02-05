@@ -1,8 +1,8 @@
-import { PrismaClient, Todo } from "@prisma/client";
-import Service from "../common/service";
-import { todos } from "../mocks/todo-mock";
+import { Todo } from "@prisma/client";
+import { BaseService } from "../../common";
+import { todos } from "../../mocks/todo-mock";
 
-export class TodoService extends Service {
+export class TodoService extends BaseService {
   public getTodosList(): Todo[] {
     return todos;
   }
