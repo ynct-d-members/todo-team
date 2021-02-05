@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-export default class Service {
+export class BaseService {
   protected readonly client: PrismaClient;
   constructor() {
     this.client = new PrismaClient({
