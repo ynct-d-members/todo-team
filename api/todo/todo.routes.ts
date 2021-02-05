@@ -5,7 +5,7 @@ export class TodoRoutes {
   initRoutes(server: FastifyInstance, opts: any, done: () => void) {
     const todoController = new TodoController();
     server.get("/todos", todoController.getTodosListHandler);
-    server.get("/todo/:id", todoController.getTodoDetailHandler);
+    server.get("/todos/:id", todoController.getTodoDetailHandler);
     server.post("/todo/create", todoController.createTodoHandler);
 
     done();
