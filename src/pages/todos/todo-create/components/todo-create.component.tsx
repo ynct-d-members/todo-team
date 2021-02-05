@@ -17,8 +17,14 @@ export const TodoCreate: React.FC = () => {
     <form onSubmit={handleSubmit(onSubmit)} style={formStyle}>
       <p>
         タイトル：
-        <input name="title" ref={register({ required: true })} />
-        {errors.title && errors.title.type && <span>Required</span>}
+        <input
+          name="title"
+          aria-label="title-input"
+          ref={register({ required: true })}
+        />
+        {errors.title && errors.title.type && (
+          <span aria-label="required-error">Required</span>
+        )}
       </p>
 
       <p>
