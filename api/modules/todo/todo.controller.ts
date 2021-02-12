@@ -14,29 +14,38 @@ interface ICreateRequest {
   };
 }
 
+interface IUpdateRequest {
+  Params: {
+    id: string;
+  };
+  Body: {
+    title?: string;
+  };
+}
+
 export class TodoController {
-  private todoService: TodoService;
-  constructor() {
-    this.todoService = new TodoService();
-  }
   // todos list
-  public getTodosListHandler(request: FastifyRequest, reply: FastifyReply) {
+  public async getTodosListHandler(
+    request: FastifyRequest,
+    reply: FastifyReply
+  ) {
+    const todoService = new TodoService();
     reply.header("Content-Type", "application/json").code(200);
-    reply.send(this.todoService.getTodosList());
+    request.log.info("getTodosList");
+    reply.send(await todoService.getTodosList());
   }
 
   // lookup todo by id
-  public getTodoDetailHandler(
+  public async getTodoDetailHandler(
     request: FastifyRequest<ITodoDetailRequest>,
     reply: FastifyReply
   ) {
+    const todoService = new TodoService();
     reply.header("Content-Type", "application/json");
 
     const { id } = request.params;
-    const todo: Todo | undefined = this.todoService.getTodo(
-      Number.parseInt(id)
-    );
-    if (todo === undefined) {
+    const todo: Todo | null = await todoService.getTodo(Number.parseInt(id));
+    if (todo === null) {
       reply.code(404).send({ message: "todo not found" });
     } else {
       reply.code(200).send(todo);
@@ -47,9 +56,26 @@ export class TodoController {
     request: FastifyRequest<ICreateRequest>,
     reply: FastifyReply
   ) {
+    const todoService = new TodoService();
     reply.header("Content-Type", "application/json");
     const { title } = request.body;
-    const todo = await this.todoService.createTodo(title);
+    const todo = await todoService.createTodo(title);
     reply.code(200).send(todo);
+  }
+
+  public async updateTodoHandler(
+    request: FastifyRequest<IUpdateRequest>,
+    reply: FastifyReply
+  ) {
+    const todoService = new TodoService();
+    reply.header("Content-Type", "application/json");
+    const { id } = request.params;
+    const { title } = request.body;
+    const todo = await todoService.updateTodo(Number.parseInt(id), title);
+    if (todo === null) {
+      reply.code(400).send({ message: "todo not found" });
+    } else {
+      reply.code(200).send(todo);
+    }
   }
 }
