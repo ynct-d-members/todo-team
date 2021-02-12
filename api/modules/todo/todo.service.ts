@@ -1,14 +1,19 @@
 import { Todo } from "@prisma/client";
 import { BaseService } from "../../common";
-import { todos } from "../../mocks/todo-mock";
 
 export class TodoService extends BaseService {
-  public getTodosList(): Todo[] {
-    return todos;
+  public async getTodosList(): Promise<Todo[] | null> {
+    return await this.client.todo.findMany();
   }
 
-  public getTodo(id: number): Todo | undefined {
-    const todo: Todo | undefined = todos.find((todo) => todo.id === id);
+  public async getTodo(id: number): Promise<Todo | null> {
+    const todo: Promise<Todo | null> = this.client.todo
+      .findUnique({
+        where: {
+          id: id,
+        },
+      })
+      .then((res) => res);
 
     return todo;
   }
@@ -20,6 +25,23 @@ export class TodoService extends BaseService {
           title: title,
         },
       });
+      return newtodo;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async updateTodo(id: number, title: string | undefined) {
+    try {
+      const newtodo = await this.client.todo.update({
+        where: {
+          id: id,
+        },
+        data: {
+          title: title != null ? title : undefined,
+        },
+      });
+
       return newtodo;
     } catch (e) {
       console.error(e);

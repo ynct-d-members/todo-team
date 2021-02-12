@@ -2,7 +2,7 @@ import Fastify from "fastify";
 import fastifyCors from "fastify-cors";
 import { Router } from "./router";
 
-const server = Fastify();
+const server = Fastify({ logger: true });
 
 class REST {
   constructor() {
