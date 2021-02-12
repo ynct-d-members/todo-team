@@ -3,15 +3,18 @@ import { useForm } from "react-hook-form";
 
 import { Todo } from "@prisma/client";
 
-type TodoCreateDto = Pick<Todo, "title">;
+export type TodoCreateDto = Pick<Todo, "title">;
+type Props = {
+  submit(data: TodoCreateDto): Promise<void>;
+};
 
 const formStyle: React.CSSProperties = {
   textAlign: "start",
 };
 
-export const TodoCreate: React.FC = () => {
+export const TodoCreate: React.FC<Props> = (props) => {
   const { register, handleSubmit, errors } = useForm<TodoCreateDto>();
-  const onSubmit = (data: TodoCreateDto) => console.log(data);
+  const onSubmit = (data: TodoCreateDto) => props.submit(data);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} style={formStyle}>
