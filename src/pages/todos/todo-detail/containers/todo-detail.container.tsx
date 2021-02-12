@@ -12,7 +12,7 @@ export const TodoDetailContainer: React.FC<{ id: number }> = (props) => {
 
   useEffect(() => {
     const fetch = async () => {
-      const result = await http.get<Todo>(`./todo/${props.id}`);
+      const result = await http.get<Todo>(`./todos/${props.id}`);
       setTodo(result);
     };
     fetch();
