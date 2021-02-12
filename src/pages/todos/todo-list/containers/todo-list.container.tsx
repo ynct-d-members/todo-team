@@ -14,7 +14,7 @@ export const TodoListContainer: React.FC = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const result = await http.get<Todos>("/todo/");
+      const result = await http.get<Todos>("/todos");
       setTodos(result);
     };
     fetch();
