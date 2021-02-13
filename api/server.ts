@@ -1,4 +1,8 @@
-import Fastify from "fastify";
+import Fastify, {
+  FastifyRequest,
+  FastifyReply,
+  RouteHandlerMethod,
+} from "fastify";
 import fastifyCors from "fastify-cors";
 import { Router } from "./router";
 
@@ -24,22 +28,29 @@ class REST {
       },
     });
 
+    server.addHook("onRequest", (request, reply, done) => {
+      reply.header("Content-Type", "application/json");
+      done();
+    });
+
     server.get("/", this.getHelloHandler);
     Router(server);
 
     //launching server at port : 3000 in local environment
-    server.listen(process.env.PORT || 3010, "0.0.0.0", (err) => {
-      if (err) {
-        console.error(err);
+    server
+      .listen(process.env.PORT || 3010, "0.0.0.0")
+      .then((address) => console.log(`server listening on ${address}`))
+      .catch((err) => {
+        console.log(err);
         process.exit(1);
-      }
-      console.log(`server running at ${server.server.address()}`);
-    });
+      });
   }
 
-  getHelloHandler(req: any, reply: any) {
-    reply.header("Content-Type", "application/json").code(200);
-    reply.send({ hello: "world" });
-  }
+  getHelloHandler: RouteHandlerMethod = (
+    request: FastifyRequest,
+    reply: FastifyReply
+  ) => {
+    reply.code(200).send({ hello: "world" });
+  };
 }
 new REST();
