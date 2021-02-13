@@ -30,7 +30,6 @@ export class TodoController {
     reply: FastifyReply
   ) {
     const todoService = new TodoService();
-    reply.header("Content-Type", "application/json").code(200);
     request.log.info("getTodosList");
     reply.send(await todoService.getTodosList());
   }
@@ -41,7 +40,6 @@ export class TodoController {
     reply: FastifyReply
   ) {
     const todoService = new TodoService();
-    reply.header("Content-Type", "application/json");
 
     const { id } = request.params;
     const todo: Todo | null = await todoService.getTodo(Number.parseInt(id));
@@ -57,7 +55,6 @@ export class TodoController {
     reply: FastifyReply
   ) {
     const todoService = new TodoService();
-    reply.header("Content-Type", "application/json");
     const { title } = request.body;
     const todo = await todoService.createTodo(title);
     reply.code(200).send(todo);
@@ -68,7 +65,6 @@ export class TodoController {
     reply: FastifyReply
   ) {
     const todoService = new TodoService();
-    reply.header("Content-Type", "application/json");
     const { id } = request.params;
     const { title } = request.body;
     const todo = await todoService.updateTodo(Number.parseInt(id), title);
