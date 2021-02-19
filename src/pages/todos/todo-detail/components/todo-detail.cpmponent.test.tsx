@@ -6,6 +6,10 @@ import { Todo } from "@prisma/client";
 import { TodoDetail } from "./todo-detail.component";
 
 jest.mock("../../../../libs");
+type Props = {
+  todo: Todo;
+  deleteFunc: (id: number) => Promise<void>;
+};
 
 describe("todo-detail.component.tsx", () => {
   afterEach(() => {
@@ -13,14 +17,22 @@ describe("todo-detail.component.tsx", () => {
   });
 
   it("render", () => {
-    const props: Todo = {
-      id: 1,
-      title: "test",
-      createdAt: new Date(),
-      updatedAt: new Date(),
+    const props: Props = {
+      todo: {
+        id: 1,
+        title: "test",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      deleteFunc: jest.fn(),
     };
 
-    const { asFragment } = render(<TodoDetail todo={props} />);
+    const { asFragment } = render(
+      <TodoDetail
+        todo={props.todo}
+        deleteFunc={() => props.deleteFunc(props.todo.id)}
+      />
+    );
 
     expect(asFragment()).toMatchSnapshot();
   });
