@@ -13,6 +13,7 @@ export const TodoListComponent: React.FC<Props> = (props) => {
   return (
     <>
       <h2>todo-list</h2>
+      <NavLink to="/todos/new">新規作成</NavLink>
       <ul>
         {todos.map((todo) => (
           <li key={todo.id}>
