@@ -12,7 +12,15 @@ async function post<T>(path: string, data: unknown) {
   });
 }
 
+// delete は組み込み関数なので remove にした
+async function remove<T>(path: string) {
+  return await instance.delete<T>(path).then((res) => {
+    return res.data;
+  });
+}
+
 export const http = {
   get,
   post,
+  remove,
 };
