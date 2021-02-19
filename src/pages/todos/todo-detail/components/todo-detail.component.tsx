@@ -4,6 +4,7 @@ import { Todo } from "@prisma/client";
 
 type TodoDetailProps = {
   todo: Todo;
+  deleteFunc: (id: number) => Promise<void>;
 };
 
 export const TodoDetail: React.FC<TodoDetailProps> = (props) => {
@@ -29,6 +30,7 @@ export const TodoDetail: React.FC<TodoDetailProps> = (props) => {
           </tr>
         </tbody>
       </table>
+      <button onClick={() => props.deleteFunc(props.todo.id)}>削除する</button>
     </>
   );
 };

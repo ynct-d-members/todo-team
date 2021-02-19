@@ -34,5 +34,8 @@ exports[`todo-detail.component.tsx render 1`] = `
       </tr>
     </tbody>
   </table>
+  <button>
+    削除する
+  </button>
 </DocumentFragment>
 `;
