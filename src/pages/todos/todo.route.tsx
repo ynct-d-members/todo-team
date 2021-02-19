@@ -12,6 +12,7 @@ export const Routes: React.FC = () => {
           <Route exact path="/todos" component={TodoListPage} />
           <Route exact path="/todos/new" component={TodoCreatePage} />
           <Route exact path="/todos/:id" component={TodoDetailPage} />
+          <Route exact path="/" component={TodoListPage} />
         </Switch>
       </Router>
     </>
