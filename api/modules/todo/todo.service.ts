@@ -1,4 +1,4 @@
-import { Todo } from "@prisma/client";
+import { PrismaClientKnownRequestError, Todo } from "@prisma/client";
 import { BaseService } from "../../common";
 
 export class TodoService extends BaseService {
@@ -45,6 +45,21 @@ export class TodoService extends BaseService {
       return newtodo;
     } catch (e) {
       console.error(e);
+    }
+  }
+
+  public async deleteTodo(id: number) {
+    try {
+      const todo = this.client.todo.delete({
+        where: {
+          id: id,
+        },
+      });
+      return todo;
+    } catch (e) {
+      if (e instanceof PrismaClientKnownRequestError) {
+        return e;
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { TodoService } from "./todo.service";
-import { Todo } from "@prisma/client";
+import { PrismaClientKnownRequestError, Todo } from "@prisma/client";
 
 interface ITodoDetailRequest {
   Params: {
@@ -20,6 +20,12 @@ interface IUpdateRequest {
   };
   Body: {
     title?: string;
+  };
+}
+
+interface IDeleteRequest {
+  Params: {
+    id: string;
   };
 }
 
@@ -72,6 +78,21 @@ export class TodoController {
       reply.code(400).send({ message: "todo not found" });
     } else {
       reply.code(200).send(todo);
+    }
+  }
+
+  public async deleteTodoHandler(
+    request: FastifyRequest<IDeleteRequest>,
+    reply: FastifyReply
+  ) {
+    const todoService = new TodoService();
+    const { id } = request.params;
+    const serviceResponse = await todoService.deleteTodo(Number.parseInt(id));
+
+    if (serviceResponse instanceof PrismaClientKnownRequestError) {
+      reply.code(404).send({ message: serviceResponse });
+    } else {
+      reply.code(200).send(serviceResponse);
     }
   }
 }
