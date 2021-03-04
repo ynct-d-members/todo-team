@@ -28,8 +28,8 @@ class REST {
       },
     });
 
-    server.addHook("onRequest", (request, reply, done) => {
-      reply.header("Content-Type", "application/json");
+    server.addHook("preHandler", (request, reply, done) => {
+      reply.type("application/json");
       done();
     });
 
@@ -50,6 +50,7 @@ class REST {
     request: FastifyRequest,
     reply: FastifyReply
   ) => {
+    reply.log.info(reply.getHeaders());
     reply.code(200).send({ hello: "world" });
   };
 }
