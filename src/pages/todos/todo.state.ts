@@ -5,4 +5,5 @@ export const initialState: Todo = {
   title: "",
   createdAt: new Date(),
   updatedAt: new Date(),
+  completed: false,
 };
