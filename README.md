@@ -2,6 +2,14 @@
 
 ## 開発セットアップ
 
+### 0. env ファイルの用意
+
+```shell
+cp .env.template .env
+```
+
+[Prisma](https://www.prisma.io/docs/concepts/database-connectors/postgresql)のドキュメントをみて、自分オリジナルの env を作ろう
+
 ### 1. asdf(必須)
 
 - [asdf](https://github.com/asdf-vm/asdf) + [asdf-nodejs](https://github.com/asdf-vm/asdf-nodejs) を使用してインストール<details><summary>インストール方法詳細</summary><pre>
@@ -30,30 +38,10 @@
 
 - [公式サイト](https://nodejs.org/) からダウンロードしてインストール
 
-### 2. mysql(必須)
-
-- インストール
+### 2. docker-compose
 
 ```shell
-brew install mysql@5.7
-echo 'export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc
-```
-
-- 起動
-
-```shell
-brew services start mysql@5.7 # mysql起動
-mysql_secure_installation # user, passの設定
-mysql --user=root --password # ログイン
-brew services stop mysql@5.7 # mysql停止
-```
-
-- 初回起動時のみ
-
-```sql
-SHOW databases; # 一覧の確認
-CREATE DATABASE mydb; # db作成
+docker-compose up -d
 ```
 
 ### 3. 依存ライブラリのインストール(必須)
