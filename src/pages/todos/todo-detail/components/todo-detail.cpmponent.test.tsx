@@ -21,6 +21,7 @@ describe("todo-detail.component.tsx", () => {
       todo: {
         id: 1,
         title: "test",
+        completed: false,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
