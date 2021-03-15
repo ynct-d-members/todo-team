@@ -1,10 +1,11 @@
 // @ts-check
 const path = require("path");
-const fs = require("fs");
 const util = require("util");
 const NodeEnvironment = require("jest-environment-node");
 const { nanoid } = require("nanoid");
 const exec = util.promisify(require("child_process").exec);
+const { Client } = require("pg");
+require("dotenv").config();
 
 const prismaBinary = path.join("node_modules", ".bin", "prisma");
 
@@ -14,23 +15,33 @@ class PrismaTestEnvironment extends NodeEnvironment {
 
     this.schemaName = `test_${nanoid()}`;
     this.connectionString =
-      process.env.DATABASE_URL +
-      "/" +
-      process.env.DATABASE_NAME +
-      "?schema=" +
-      this.schemaName;
-    this.dbPath = path.join(__dirname, this.schemaName);
+      process.env.DATABASE_URL_WITH_NAME + "?schema=" + this.schemaName;
+    process.env.DATABASE_URL_WITH_NAME = this.connectionString;
+    this.global.process.env.DATABASE_URL_WITH_NAME = this.connectionString;
   }
 
   async setup() {
-    await exec(`${prismaBinary} db push --preview-feature`);
-    return super.setup();
+    try {
+      await exec(`${prismaBinary} db push --preview-feature`);
+      return super.setup();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async teardown() {
     try {
-      await fs.promises.unlink(this.dbPath);
-    } catch (error) {}
+      const pgClient = new Client({
+        connectionString: "postgresql://root:password@localhost:15432/mydb",
+      });
+      await pgClient.connect();
+      await pgClient.query(
+        `DROP SCHEMA IF EXISTS "${this.schemaName}" CASCADE`
+      );
+      await pgClient.end();
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 
