@@ -12,10 +12,11 @@ jobs:
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
       POSTGRES_PORT: 15432
     runs-on: ubuntu-latest
-    container: node:10.18-jessie
     services:
       postgres:
         image: postgres
+        env:
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
