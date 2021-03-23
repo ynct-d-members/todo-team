@@ -22,7 +22,6 @@ class PrismaTestEnvironment extends NodeEnvironment {
 
   async setup() {
     try {
-      // console.log(this.connectionString);
       await exec(`${prismaBinary} db push --preview-feature`);
       return super.setup();
     } catch (e) {

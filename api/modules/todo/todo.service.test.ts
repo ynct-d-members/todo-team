@@ -8,6 +8,7 @@ afterAll(async () => {
 });
 
 test("TestTodoという名前のTodoを作成できる", async () => {
-  const todo = await service.createTodo("TestTodo");
+  const todoName = "TestTodo";
+  const todo = await service.createTodo(todoName);
   expect(todo.title).toMatch("TestTodo");
 });
