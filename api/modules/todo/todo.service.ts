@@ -1,4 +1,5 @@
-import { PrismaClientKnownRequestError, Todo } from "@prisma/client";
+import { Todo } from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { BaseService } from "../../common";
 
 export class TodoService extends BaseService {
