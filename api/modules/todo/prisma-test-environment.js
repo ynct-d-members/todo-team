@@ -32,7 +32,7 @@ class PrismaTestEnvironment extends NodeEnvironment {
   async teardown() {
     try {
       const pgClient = new Client({
-        connectionString: "postgresql://root:password@localhost:5432/mydb",
+        connectionString: "postgresql://root:password@localhost:15432/mydb",
       });
       await pgClient.connect();
       await pgClient.query(
