@@ -10,7 +10,7 @@ jobs:
       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-      POSTGRES_PORT: 15432
+      POSTGRES_PORT: 5432
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -19,14 +19,14 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_PORT: 15432
+          # POSTGRES_PORT: 5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
         ports:
-          - 5432:15432
+          - 5432:5432
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
