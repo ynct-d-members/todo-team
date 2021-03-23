@@ -15,9 +15,9 @@ class PrismaTestEnvironment extends NodeEnvironment {
 
     this.schemaName = `test_${nanoid()}`;
     this.connectionString =
-      process.env.DATABASE_URL_WITH_NAME + "?schema=" + this.schemaName;
-    process.env.DATABASE_URL_WITH_NAME = this.connectionString;
-    this.global.process.env.DATABASE_URL_WITH_NAME = this.connectionString;
+      process.env.DATABASE_URL + "?schema=" + this.schemaName;
+    process.env.DATABASE_URL = this.connectionString;
+    this.global.process.env.DATABASE_URL = this.connectionString;
   }
 
   async setup() {
@@ -32,7 +32,7 @@ class PrismaTestEnvironment extends NodeEnvironment {
   async teardown() {
     try {
       const pgClient = new Client({
-        connectionString: process.env.DATABASE_URL_WITH_NAME,
+        connectionString: process.env.DATABASE_URL,
       });
       await pgClient.connect();
       await pgClient.query(
