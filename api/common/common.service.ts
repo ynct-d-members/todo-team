@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 export class BaseService {
-  protected readonly client: PrismaClient;
+  protected client: PrismaClient<Prisma.PrismaClientOptions, "info">;
   constructor() {
     this.client = new PrismaClient({
       log: [
@@ -14,7 +14,7 @@ export class BaseService {
           level: "error",
         },
         {
-          emit: "stdout",
+          emit: "event",
           level: "info",
         },
         {
@@ -23,5 +23,10 @@ export class BaseService {
         },
       ],
     });
+    this.client.$on("info", (e) => console.log(e));
+  }
+
+  async closeDatabase() {
+    await this.client.$disconnect();
   }
 }
