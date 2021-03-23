@@ -6,7 +6,6 @@ jobs:
   test:
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      DATABASE_URL_WITH_NAME: ${{secrets.DATABASE_URL_WITH_NAME}}
       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
