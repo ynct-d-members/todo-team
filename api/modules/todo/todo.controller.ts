@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
+import { Controller } from "fastify-decorators";
 import { TodoService } from "./todo.service";
-import { Todo } from "@prisma/client";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
+import { Todo, Prisma } from "@prisma/client";
 
 interface ITodoDetailRequest {
   Params: {
@@ -30,19 +30,21 @@ interface IDeleteRequest {
   };
 }
 
+@Controller({
+  route: "/todo",
+})
 export class TodoController {
-  protected todoService: TodoService = new TodoService();
-  // constructor() {
-  //   this.todoService = new TodoService();
-  // }
-  // todos list
+  protected todoService: TodoService;
+  constructor() {
+    this.todoService = new TodoService();
+  }
+
   public async getTodosListHandler(
     request: FastifyRequest,
     reply: FastifyReply
   ) {
-    const todoService = new TodoService();
     request.log.info("getTodosList");
-    reply.send(await todoService.getTodosList());
+    reply.send(await this.todoService.getTodosList());
   }
 
   // lookup todo by id
@@ -50,8 +52,6 @@ export class TodoController {
     request: FastifyRequest<ITodoDetailRequest>,
     reply: FastifyReply
   ) {
-    // const todoService = new TodoService();
-
     const { id } = request.params;
     const todo: Todo | null = await this.todoService.getTodo(
       Number.parseInt(id)
@@ -67,9 +67,8 @@ export class TodoController {
     request: FastifyRequest<ICreateRequest>,
     reply: FastifyReply
   ) {
-    const todoService = new TodoService();
     const { title } = request.body;
-    const todo = await todoService.createTodo(title);
+    const todo = await this.todoService.createTodo(title);
     reply.code(200).send(todo);
   }
 
@@ -77,7 +76,6 @@ export class TodoController {
     request: FastifyRequest<IUpdateRequest>,
     reply: FastifyReply
   ) {
-    // const todoService = new TodoService();
     const { id } = request.params;
     const { title } = request.body;
     const todo = await this.todoService.updateTodo(Number.parseInt(id), title);
@@ -92,13 +90,12 @@ export class TodoController {
     request: FastifyRequest<IDeleteRequest>,
     reply: FastifyReply
   ) {
-    // const todoService = new TodoService();
     const { id } = request.params;
     const serviceResponse = await this.todoService.deleteTodo(
       Number.parseInt(id)
     );
 
-    if (serviceResponse instanceof PrismaClientKnownRequestError) {
+    if (serviceResponse instanceof Prisma.PrismaClientKnownRequestError) {
       reply.code(404).send({ message: serviceResponse });
     } else {
       reply.code(200).send(serviceResponse);

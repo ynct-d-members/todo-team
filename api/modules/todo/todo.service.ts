@@ -1,4 +1,4 @@
-import { PrismaClientKnownRequestError, Todo } from "@prisma/client";
+import { Todo, Prisma } from "@prisma/client";
 import { BaseService } from "../../common";
 
 export class TodoService extends BaseService {
@@ -6,8 +6,8 @@ export class TodoService extends BaseService {
     return await this.client.todo.findMany();
   }
 
-  public async getTodo(id: number): Promise<Todo | null> {
-    const todo: Promise<Todo | null> = this.client.todo
+  public async getTodo(id: number) {
+    const todo = await this.client.todo
       .findUnique({
         where: {
           id: id,
@@ -27,7 +27,10 @@ export class TodoService extends BaseService {
       });
       return newtodo;
     } catch (e) {
-      console.error(e);
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        console.error(e.message);
+      }
+      throw e;
     }
   }
 
@@ -57,9 +60,10 @@ export class TodoService extends BaseService {
       });
       return todo;
     } catch (e) {
-      if (e instanceof PrismaClientKnownRequestError) {
-        return e;
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        console.error(e.message);
       }
+      throw e;
     }
   }
 }
