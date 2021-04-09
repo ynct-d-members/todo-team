@@ -1,7 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 
 import { initialState, adapter } from "../states";
-import { fetchAllTodos } from "../actions";
+import { fetchAllTodos, fetchTodo } from "../actions";
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
@@ -13,6 +13,17 @@ export const reducer = createReducer(initialState, (builder) => {
       return adapter.setAll({ ...state, isFetching: false }, todos);
     })
     .addCase(fetchAllTodos.rejected, (state) => {
+      return { ...state, isFetching: false };
+    })
+    .addCase(fetchTodo.pending, (state, action) => {
+      const { id } = action.meta.arg;
+      return { ...state, isFetching: true, selectedId: id };
+    })
+    .addCase(fetchTodo.fulfilled, (state, action) => {
+      const { todo } = action.payload;
+      return adapter.upsertOne({ ...state, isFetching: false }, todo);
+    })
+    .addCase(fetchTodo.rejected, (state) => {
       return { ...state, isFetching: false };
     });
 });

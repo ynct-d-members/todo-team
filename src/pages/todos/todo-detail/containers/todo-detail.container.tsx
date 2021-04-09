@@ -1,16 +1,16 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { Todo } from "@prisma/client";
 import { http } from "../../../../libs/http";
 
 import { TodoDetail } from "../components";
-import { initialState } from "../../todo.state";
+import { useTodoStore } from "../../../../store";
 
-export const TodoDetailContainer: React.FC<{ id: number }> = (props) => {
-  const [todo, setTodo] = useState(initialState);
+export const TodoDetailContainer: React.FC<{ id: string }> = (props) => {
   const history = useHistory();
+  const { fetch, todo } = useTodoStore();
 
   const deleteTodo = async (id: number) => {
     http.remove<Todo>(`/todos/delete/${id}`).then((res) => {
@@ -19,12 +19,8 @@ export const TodoDetailContainer: React.FC<{ id: number }> = (props) => {
   };
 
   useEffect(() => {
-    const fetch = async () => {
-      const result = await http.get<Todo>(`./todos/${props.id}`);
-      setTodo(result);
-    };
-    fetch();
-  }, [props.id]);
+    fetch({ id: props.id });
+  }, [props.id, fetch]);
 
   return <TodoDetail todo={todo} deleteFunc={deleteTodo} />;
 };

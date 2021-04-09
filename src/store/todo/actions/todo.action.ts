@@ -11,3 +11,12 @@ export const fetchAllTodos = createAsyncThunk(
     return { todos: result };
   }
 );
+
+export const fetchTodo = createAsyncThunk(
+  `${featureKey}/fetch`,
+  async (arg: { id: string }) => {
+    const { id } = arg;
+    const result = await http.get<Todo>(`/todos/${id}`);
+    return { todo: result };
+  }
+);
