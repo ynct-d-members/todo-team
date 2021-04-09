@@ -1,5 +1,5 @@
 import React from "react";
-import { date } from "../../../../libs";
+import { date } from "@/libs";
 import { Todo } from "@prisma/client";
 
 type TodoDetailProps = {
