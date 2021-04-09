@@ -1,4 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
+import { Controller } from "fastify-decorators";
 import { TodoService } from "./todo.service";
 import { Todo } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
@@ -30,19 +31,23 @@ interface IDeleteRequest {
   };
 }
 
+@Controller({
+  route: '/todo'
+})
 export class TodoController {
-  protected todoService: TodoService = new TodoService();
-  // constructor() {
-  //   this.todoService = new TodoService();
-  // }
-  // todos list
+  // protected todoService: TodoService = new TodoService();
+  protected todoService: TodoService;
+  constructor() {
+    this.todoService = new TodoService();
+  }
+
   public async getTodosListHandler(
     request: FastifyRequest,
     reply: FastifyReply
   ) {
-    const todoService = new TodoService();
+    // const todoService = new TodoService();
     request.log.info("getTodosList");
-    reply.send(await todoService.getTodosList());
+    reply.send(await this.todoService.getTodosList());
   }
 
   // lookup todo by id
@@ -67,9 +72,9 @@ export class TodoController {
     request: FastifyRequest<ICreateRequest>,
     reply: FastifyReply
   ) {
-    const todoService = new TodoService();
+    // const todoService = new TodoService();
     const { title } = request.body;
-    const todo = await todoService.createTodo(title);
+    const todo = await this.todoService.createTodo(title);
     reply.code(200).send(todo);
   }
 
