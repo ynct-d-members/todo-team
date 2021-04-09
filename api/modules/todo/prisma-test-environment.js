@@ -1,4 +1,3 @@
-// @ts-check
 const path = require("path");
 const util = require("util");
 const NodeEnvironment = require("jest-environment-node");
