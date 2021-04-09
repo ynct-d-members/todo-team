@@ -4,7 +4,7 @@ import { Todo } from "@prisma/client";
 
 import { TodoCreate, TodoCreateDto } from "../components";
 
-import { http } from "../../../../libs/http";
+import { http } from "@/libs/http";
 
 export const TodoCreateContainer: React.FC = () => {
   const history = useHistory();

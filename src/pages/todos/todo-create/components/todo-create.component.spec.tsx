@@ -5,7 +5,7 @@ import { TodoCreate } from "./todo-create.component";
 
 describe("todo-create.component.tsx", () => {
   const setup = () => {
-    const utils = render(<TodoCreate />);
+    const utils = render(<TodoCreate submit={jest.fn()} />);
     const inputTitle = utils.getByLabelText("title-input") as HTMLInputElement;
     const submit = utils.getByDisplayValue("送信") as HTMLInputElement;
     return {
@@ -20,7 +20,7 @@ describe("todo-create.component.tsx", () => {
   });
 
   it("render", () => {
-    const { asFragment } = render(<TodoCreate />);
+    const { asFragment } = render(<TodoCreate submit={jest.fn()} />);
 
     expect(asFragment()).toMatchSnapshot();
   });

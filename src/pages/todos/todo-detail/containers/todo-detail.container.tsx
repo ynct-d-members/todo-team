@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { Todo } from "@prisma/client";
-import { http } from "../../../../libs/http";
+import { http } from "@/libs/http";
 
 import { TodoDetail } from "../components";
-import { useTodoStore } from "../../../../store";
+import { useTodoStore } from "@/store";
 
 export const TodoDetailContainer: React.FC<{ id: string }> = (props) => {
   const history = useHistory();

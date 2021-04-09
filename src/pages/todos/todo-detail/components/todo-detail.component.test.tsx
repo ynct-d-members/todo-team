@@ -5,7 +5,7 @@ import { Todo } from "@prisma/client";
 
 import { TodoDetail } from "./todo-detail.component";
 
-jest.mock("../../../../libs");
+jest.mock("@/libs");
 type Props = {
   todo: Todo;
   deleteFunc: (id: number) => Promise<void>;
