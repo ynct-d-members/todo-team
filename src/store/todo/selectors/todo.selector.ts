@@ -17,3 +17,14 @@ export const isFetchingSelector = createSelector(
   featureStateSelector,
   (state) => state.isFetching
 );
+
+export const selectedIdSelector = createSelector(
+  featureStateSelector,
+  (state) => state.selectedId
+);
+
+export const todoSelector = createSelector(
+  entitiesSelector,
+  selectedIdSelector,
+  (entities, id) => (id ? entities[id] || null : null)
+);
