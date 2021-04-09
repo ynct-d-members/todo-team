@@ -10,31 +10,20 @@ cp .env.template .env
 
 [Prisma](https://www.prisma.io/docs/concepts/database-connectors/postgresql)のドキュメントをみて、自分オリジナルの env を作ろう
 
-### 1. asdf(必須)
+### 1. volta(必須)
 
-- [asdf](https://github.com/asdf-vm/asdf) + [asdf-nodejs](https://github.com/asdf-vm/asdf-nodejs) を使用してインストール<details><summary>インストール方法詳細</summary><pre>
-  \$ git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.8
-  </pre><pre>
-  // bash
-  $ echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bash_profile
-  $ echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.bash_profile
-  $ source ~/.bash_profile
-  <br />// zsh
-  % echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.zprofile
-  % source ~/.zprofile
-  </pre><pre>
-  $ brew install coreutils
-  $ brew install gpg
-  </pre><pre>
-  $ asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-  $ bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
-  </pre><pre>
-  // example
-  $ asdf install nodejs 14.15.4
-  $ asdf global nodejs 14.15.4
-  $ asdf reshim nodejs
-  </pre>
-  </details>
+- [volta](https://volta.sh/)
+
+```shell
+# install volta
+curl https://get.volta.sh | bash
+
+# pathの読み込み
+exec $SHELL -l
+
+# install Node
+volta install node
+```
 
 - [公式サイト](https://nodejs.org/) からダウンロードしてインストール
 
