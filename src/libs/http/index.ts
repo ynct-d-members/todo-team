@@ -19,8 +19,15 @@ async function remove<T>(path: string) {
   });
 }
 
+async function patch<T>(path: string, data: unknown) {
+  return await instance.patch<T>(path, data).then((res) => {
+    return res.data;
+  });
+}
+
 export const http = {
   get,
   post,
   remove,
+  patch,
 };
