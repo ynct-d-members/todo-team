@@ -14,12 +14,13 @@ import {
 import { TodoService } from "./todo.service";
 import { Todo, Prisma } from "@prisma/client";
 
-const enum ErrorType {
-  GENERIC,
-  NOTFOUND,
-  TYPE,
-  SYNTAX,
-}
+const ErrorType = {
+  GENERIC: "GENERIC",
+  TODO_NOT_FOUND: "TODO_NOT_FOUND",
+  REQUEST_VALIDATION_ERROR: "REQUEST_VALIDATION_ERROR",
+  TYPE: "TYPE",
+  SYNTAX: "SYNTAX",
+} as const;
 
 interface ITodoDetailRequest {
   Params: {
@@ -118,7 +119,7 @@ export class TodoController {
     const { id } = request.params;
     const todo: Todo | null = await todoService.getTodo(Number.parseInt(id));
     if (todo === null) {
-      throw { code: "TODO_NOTFOUND" };
+      throw { code: ErrorType.TODO_NOT_FOUND };
     } else {
       reply.code(200).send(todo);
     }
@@ -131,7 +132,7 @@ export class TodoController {
   ) {
     const todoService = new TodoService();
     if (request.validationError) {
-      throw { code: "REQUEST_VALIDATION_ERROR" };
+      throw { code: ErrorType.REQUEST_VALIDATION_ERROR };
     }
     const { title } = request.body;
     const todo = await todoService.createTodo(title);
@@ -148,7 +149,7 @@ export class TodoController {
     const { title } = request.body;
     const todo = await todoService.updateTodo(Number.parseInt(id), title);
     if (todo === null) {
-      throw { code: "TODO_NOTFOUND" };
+      throw { code: ErrorType.TODO_NOT_FOUND };
     } else {
       reply.code(200).send(todo);
     }
@@ -170,7 +171,7 @@ export class TodoController {
     }
   }
 
-  @ErrorHandler("TODO_NOTFOUND")
+  @ErrorHandler(ErrorType.TODO_NOT_FOUND)
   notFoundErrorHandler(
     error: Error,
     request: FastifyRequest,
@@ -181,7 +182,7 @@ export class TodoController {
     });
   }
 
-  @ErrorHandler("REQUEST_VALIDATION_ERROR")
+  @ErrorHandler(ErrorType.REQUEST_VALIDATION_ERROR)
   validationErrorHandler(
     error: Error,
     request: FastifyRequest,
