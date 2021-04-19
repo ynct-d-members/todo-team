@@ -13,7 +13,7 @@ export const TodoDetailContainer: React.FC<{ id: string }> = (props) => {
   const { fetch, todo } = useTodoStore();
 
   const deleteTodo = async (id: number) => {
-    http.remove<Todo>(`/todos/delete/${id}`).then((res) => {
+    http.remove<Todo>(`/todos/${id}`).then((res) => {
       history.push("/todos");
     });
   };
