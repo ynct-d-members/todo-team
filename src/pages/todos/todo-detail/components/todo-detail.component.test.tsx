@@ -4,6 +4,8 @@ import { cleanup, render } from "@testing-library/react";
 import { Todo } from "@prisma/client";
 
 import { TodoDetail } from "./todo-detail.component";
+import { Router } from "react-router-dom";
+import { createMemoryHistory } from "history";
 
 jest.mock("@/libs");
 type Props = {
@@ -17,6 +19,7 @@ describe("todo-detail.component.tsx", () => {
   });
 
   it("render", () => {
+    const history = createMemoryHistory();
     const props: Props = {
       todo: {
         id: 1,
@@ -29,10 +32,12 @@ describe("todo-detail.component.tsx", () => {
     };
 
     const { asFragment } = render(
-      <TodoDetail
-        todo={props.todo}
-        deleteFunc={() => props.deleteFunc(props.todo.id)}
-      />
+      <Router history={history}>
+        <TodoDetail
+          todo={props.todo}
+          deleteFunc={() => props.deleteFunc(props.todo.id)}
+        />
+      </Router>
     );
 
     expect(asFragment()).toMatchSnapshot();
