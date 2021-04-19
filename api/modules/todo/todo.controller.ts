@@ -1,8 +1,4 @@
-import fastify, {
-  FastifyReply,
-  FastifyRequest,
-  RouteShorthandOptions,
-} from "fastify";
+import { FastifyReply, FastifyRequest, RouteShorthandOptions } from "fastify";
 import {
   Controller,
   DELETE,
@@ -139,7 +135,7 @@ export class TodoController {
     reply.code(200).send(todo);
   }
 
-  @PATCH("/todos/update/:id", updateTodoOpts)
+  @PATCH("/todos/:id", updateTodoOpts)
   public async updateTodoHandler(
     request: FastifyRequest<IUpdateRequest>,
     reply: FastifyReply
@@ -155,7 +151,7 @@ export class TodoController {
     }
   }
 
-  @DELETE("/todos/delete/:id")
+  @DELETE("/todos/:id")
   public async deleteTodoHandler(
     request: FastifyRequest<IDeleteRequest>,
     reply: FastifyReply
