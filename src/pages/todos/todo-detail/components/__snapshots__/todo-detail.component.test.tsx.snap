@@ -34,6 +34,11 @@ exports[`todo-detail.component.tsx render 1`] = `
       </tr>
     </tbody>
   </table>
+  <a
+    href="/todos/edit/1"
+  >
+    編集する
+  </a>
   <button>
     削除する
   </button>
