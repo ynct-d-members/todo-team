@@ -14,7 +14,7 @@ export const TodoEditContainer: React.FC<{ id: string }> = (props) => {
   const { fetch, todo } = useTodoStore();
 
   const updateTodo = async (data: TodoUpdateDto) => {
-    http.patch<Todo>(`/todos/update/${id}`, data).then((res) => {
+    http.patch<Todo>(`/todos/${id}`, data).then((res) => {
       history.push(`/todos/${res.id}`);
     });
   };
