@@ -1,6 +1,7 @@
 import React from "react";
 import { date } from "@/libs";
 import { Todo } from "@prisma/client";
+import { NavLink } from "react-router-dom";
 
 type TodoDetailProps = {
   todo: Todo | null;
@@ -33,6 +34,7 @@ export const TodoDetail: React.FC<TodoDetailProps> = (props) => {
               </tr>
             </tbody>
           </table>
+          <NavLink to={`/todos/edit/${todo.id}`}>編集する</NavLink>
           <button onClick={() => props.deleteFunc(todo.id)}>削除する</button>
         </>
       ) : (
