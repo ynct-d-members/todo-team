@@ -4,7 +4,8 @@ import Fastify, {
   RouteHandlerMethod,
 } from "fastify";
 import fastifyCors from "fastify-cors";
-import { Router } from "./router";
+import { bootstrap } from "fastify-decorators";
+import { TodoController } from "./modules/todo/todo.controller";
 
 const server = Fastify({ logger: true });
 
@@ -28,13 +29,16 @@ class REST {
       },
     });
 
+    server.register(bootstrap, {
+      controllers: [TodoController],
+    });
+
     server.addHook("preHandler", (request, reply, done) => {
       reply.type("application/json");
       done();
     });
 
     server.get("/", this.getHelloHandler);
-    Router(server);
 
     //launching server at port : 3000 in local environment
     server
