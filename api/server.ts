@@ -6,6 +6,7 @@ import Fastify, {
 import fastifyCors from "fastify-cors";
 import { bootstrap } from "fastify-decorators";
 import { TodoController } from "./modules/todo/todo.controller";
+import "reflect-metadata";
 
 const server = Fastify({ logger: true });
 
