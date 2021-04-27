@@ -3,7 +3,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { http } from "../../../libs/http";
 import { featureKey } from "../states";
 import { Todo, TodoCreateDto, TodoUpdateDto } from "@/models";
-import { todos } from "api/mocks/todo-mock";
 
 export const fetchAllTodos = createAsyncThunk(
   `${featureKey}/fetchAll`,
