@@ -1,6 +1,8 @@
 import { Todo, Prisma } from "@prisma/client";
+import { Service } from "fastify-decorators";
 import { BaseService } from "../../common";
 
+@Service()
 export class TodoService extends BaseService {
   public async getTodosList(): Promise<Todo[] | null> {
     return await this.client.todo.findMany();

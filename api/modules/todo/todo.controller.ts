@@ -4,6 +4,7 @@ import {
   DELETE,
   ErrorHandler,
   GET,
+  Inject,
   PATCH,
   POST,
 } from "fastify-decorators";
@@ -95,10 +96,8 @@ const updateTodoOpts: RouteShorthandOptions = {
   route: "/",
 })
 export class TodoController {
-  protected todoService: TodoService;
-  constructor() {
-    this.todoService = new TodoService();
-  }
+  @Inject(TodoService)
+  protected todoService!: TodoService;
 
   @GET("/todos")
   public async getTodosListHandler(_: FastifyRequest, reply: FastifyReply) {
@@ -111,9 +110,10 @@ export class TodoController {
     request: FastifyRequest<ITodoDetailRequest>,
     reply: FastifyReply
   ) {
-    const todoService = new TodoService();
     const { id } = request.params;
-    const todo: Todo | null = await todoService.getTodo(Number.parseInt(id));
+    const todo: Todo | null = await this.todoService.getTodo(
+      Number.parseInt(id)
+    );
     if (todo === null) {
       throw { code: ErrorType.TODO_NOT_FOUND };
     } else {
@@ -140,10 +140,9 @@ export class TodoController {
     request: FastifyRequest<IUpdateRequest>,
     reply: FastifyReply
   ) {
-    const todoService = new TodoService();
     const { id } = request.params;
     const { title } = request.body;
-    const todo = await todoService.updateTodo(Number.parseInt(id), title);
+    const todo = await this.todoService.updateTodo(Number.parseInt(id), title);
     if (todo === null) {
       throw { code: ErrorType.TODO_NOT_FOUND };
     } else {
@@ -156,14 +155,18 @@ export class TodoController {
     request: FastifyRequest<IDeleteRequest>,
     reply: FastifyReply
   ) {
-    const todoService = new TodoService();
     const { id } = request.params;
-    const serviceResponse = await todoService.deleteTodo(Number.parseInt(id));
+    const serviceResponse = await this.todoService.deleteTodo(
+      Number.parseInt(id)
+    );
 
     if (serviceResponse instanceof Prisma.PrismaClientKnownRequestError) {
-      reply.code(404).send({ message: serviceResponse });
+      const code = serviceResponse.code;
+      if (code === "P2001") {
+        throw { code: ErrorType.TODO_NOT_FOUND };
+      }
     } else {
-      reply.code(200).send(serviceResponse);
+      reply.code(204).send({ id: serviceResponse.id });
     }
   }
 
