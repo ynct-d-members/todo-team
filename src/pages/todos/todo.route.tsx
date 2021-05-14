@@ -5,7 +5,7 @@ import { TodoListPage } from "./todo-list";
 import { TodoCreatePage } from "./todo-create";
 import { TodoEditPage } from "./todo-edit";
 
-export const Routes: React.FC = () => {
+export const TodoRoute: React.FC = () => {
   return (
     <>
       <Router>
