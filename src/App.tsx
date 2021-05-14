@@ -1,11 +1,22 @@
 import React from "react";
 import "./App.css";
-import { Routes } from "./pages/todos/todo.route";
+import { Suspense } from "react";
+import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { TodoRoute, AuthPage } from "./pages";
 
-export function App() {
+export const App: React.FC = () => {
   return (
-    <div className="App">
-      <Routes />
-    </div>
+    <>
+      <Suspense fallback={null}>
+        <div className="App">
+          <Router>
+            <Switch>
+              <Route exact path="/todos" component={TodoRoute} />
+              <Route exact path="/" component={AuthPage} />
+            </Switch>
+          </Router>
+        </div>
+      </Suspense>
+    </>
   );
-}
+};
